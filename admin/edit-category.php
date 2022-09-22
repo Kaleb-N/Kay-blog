@@ -20,10 +20,11 @@ if (isset($_GET['id'])) {
     <section class="form_section">
         <div class="container form_section-container">
             <h2>Edit Category</h2>
-            <form action="" enctype="multipart/form-data">
-                <input type="text" name="" value="<?= $category['title'] ?>" placeholder="title">
-                <textarea rows="4" placeholder="Description"><?= $category['description'] ?></textarea>
-                <button type="submit" class="btn">Update Category</button>
+            <form action="<?= ROOT_URL ?>admin/edit-category-logic.php" method="POST">
+                <input type="hidden" name="id" value="<?= $category['id'] ?>">
+                <input type="text" name="title" value="<?= $category['title'] ?>" placeholder="title">
+                <textarea rows="4" name="description" placeholder="Description"><?= $category['description'] ?></textarea>
+                <button type="submit" name="submit" class="btn">Update Category</button>
             </form>
         </div>
     </section>

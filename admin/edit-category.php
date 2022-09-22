@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     $query = "SELECT * FROM categories WHERE id=$id";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) == 1) {
-        $categories = mysqli_fetch_assoc($result);
+        $category = mysqli_fetch_assoc($result);
     }
 } else {
     header('location: ' . ROOT_URL . 'admin/manage-categories.php');

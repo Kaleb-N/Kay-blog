@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
         die();
     } else {
         // insert category into database
-        $query = "INSERT INTO categories (title, description) VALUES ('$title', 'description')";
+        $query = "INSERT INTO categories (title, description) VALUES ('$title', '$description')";
         $result = mysqli_query($connection, $query);
         if (mysqli_errno($connection)) {
             $_SESSION['add-category'] = "Couldn't add category";

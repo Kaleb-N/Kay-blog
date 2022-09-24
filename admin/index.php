@@ -10,11 +10,35 @@ $posts = mysqli_query($connection, $query);
 <!-- This page was remained from dashboard to index -->
     <!--======= MANAGE POSTS =======-->
     <section class="dashboard">
-        <?php if (isset($_SESSION['add-post-success'])) : // shows if deleted user was successful ?>
+        <?php if (isset($_SESSION['add-post-success'])) : // shows if added post was successful ?>
             <div class="alert_message success container">
                 <p>
                     <?= $_SESSION['add-post-success'];
                         unset($_SESSION['add-post-success']);
+                    ?>
+                </p>
+            </div>
+        <?php elseif (isset($_SESSION['edit-post-success'])) : // shows if edit post was successful ?>
+            <div class="alert_message success container">
+                <p>
+                    <?= $_SESSION['edit-post-success'];
+                        unset($_SESSION['edit-post-success']);
+                    ?>
+                </p>
+            </div>
+        <?php elseif (isset($_SESSION['edit-post'])) : // shows if edit post was not successful ?>
+            <div class="alert_message error container">
+                <p>
+                    <?= $_SESSION['edit-post'];
+                        unset($_SESSION['edit-post']);
+                    ?>
+                </p>
+            </div>
+        <?php elseif (isset($_SESSION['delete-post-success'])) : // shows if deleted post was successful ?>
+            <div class="alert_message success container">
+                <p>
+                    <?= $_SESSION['delete-post-success'];
+                        unset($_SESSION['delete-post-success']);
                     ?>
                 </p>
             </div>

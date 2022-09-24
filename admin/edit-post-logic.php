@@ -18,11 +18,11 @@ if (isset($_POST['submit'])) {
 
     // check and validate input values
     if (!$title) {
-        $_SESSION['edit-post'] = "Invalid form input";
+        $_SESSION['edit-post'] = " Couldn't update post, invalid form input in edit page";
     } elseif (!$category_id) {
-        $_SESSION['edit-post'] = "Couldn't update post, invalid form data";
+        $_SESSION['edit-post'] = "Couldn't update post, invalid form data in edit page";
     } elseif (!$body) {
-        $_SESSION['edit-post'] = "Couldn't update post, invalid form data";
+        $_SESSION['edit-post'] = "Couldn't update post, invalid form data in edit page";
     } else {
         // delete existing thumbnail if new thumbnail is available
         if ($thumbnail['name']) {

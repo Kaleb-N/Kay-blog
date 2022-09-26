@@ -1,31 +1,60 @@
 <?php
 include 'partials/header.php';
+
+// fetch featured post from database
+$featured_query = "SELECT * FROM posts WHERE is_featured=1";
+$featured_result = mysqli_query($connection, $featured_query);
+$featured = mysqli_fetch_assoc($featured_result);
+
+// fetch 6 posts from posts table
+$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 6";
+$posts = mysqli_query($connection, $query);
 ?>
 
     <!--=========== FEATURED ==========-->
+    <!-- show featured post if there's any -->
+<?php if (mysqli_num_rows($featured_result) == 1) : ?>    
     <section class="featured">
         <div class="container featured_container">
             <div class="post_thumbnail">
-                <img src="./images/blog31.jpg">
+                <img src="./images/<?= $featured['thumbnail'] ?>">
             </div>
             <div class="post_info">
-                <a href="category-posts.php" class="category_button">Nature</a>
-                <h2 class="post_title"><a href="post.html">Lorem ipsum dolor sit amet consectetur adipisicing.</a></h2>
+                <?php 
+                // fetch category from categories table using category_d of post
+                $category_id = $featured['category_id'];
+                $category_query = "SELECT * FROM categories WHERE id=$category_id";
+                $category_result = mysqli_query($connection, $category_query);
+                $category = mysqli_fetch_assoc($category_result);
+                ?>
+                <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>" class="category_button"><?= $category['title'] ?></a>
+                <h2 class="post_title"><a href="<?= ROOT_URL ?>post.php?id=<?= $featured['id'] ?>"><?= $featured['title'] ?></a></h2>
                 <p class="post_body">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo laboriosam deleniti repellat. Eveniet doloribus facere
+                    <?= substr($featured['body'], 0, 250) ?>...
                 </p>
                 <div class="post_author">
+                    <?php
+                    // fetch author from users table using author_id
+                    $author_id = $featured['author_id'];
+                    $author_query = "SELECT * FROM users WHERE id=$author_id";
+                    $author_result = mysqli_query($connection, $author_query);
+                    $author = mysqli_fetch_assoc($author_result);
+
+                    ?>
                     <div class="post_author-avatar">
-                        <img src="./images//avatar3.jpg">
+                        <img src="./images/<?= $author['avatar'] ?>">
                     </div>
                     <div class="post_author-info">
-                        <h5>By: Jane Doe</h5>
-                        <small>Aug 31, 2022 - 08:30</small>
+                        <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                        <small>
+                            <?= date("M d, Y - H:i", strtotime($featured['date_time'])) ?>
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+<?php endif ?>
 
     <!--=========== POSTS ==========-->
     <section class="posts">
@@ -48,150 +77,6 @@ include 'partials/header.php';
                         </div>
                         <div class="post_author-info">
                             <h5>By: Free Man</h5>
-                            <small>Aug 24, 2022</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog8.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar15.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Free Man</h5>
-                            <small>July 2, 2023</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog9.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar14.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Free Man</h5>
-                            <small>May 24, 2022</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog26.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar5.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Clement Grey</h5>
-                            <small>Aug 24, 2022</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog27.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar13.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Lucy Free</h5>
-                            <small>Aug 24, 2022</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog13.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar15.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Grace Peters</h5>
-                            <small>Aug 24, 2022</small>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="post">
-                <div class="post_thumbnail">
-                    <img src="./images/blog12.jpg">
-                </div>
-                <div class="post_info">
-                    <a href="" class="category_button">Nature</a>
-                    <h3 class="post_title">
-                        <a href="post.html">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, assumenda!</a>
-                    </h3>
-                    <p class="post_body">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto rem officiis saepe cum sequi at porro asperiores cupiditate quas impedit.
-                    </p>
-                    <div class="post_author">
-                        <div class="post_author-avatar">
-                            <img src="./images/avatar9.jpg">
-                        </div>
-                        <div class="post_author-info">
-                            <h5>By: Ice Man</h5>
                             <small>Aug 24, 2022</small>
                         </div>
                     </div>

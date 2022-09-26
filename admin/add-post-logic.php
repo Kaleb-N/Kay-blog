@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
     // redirect back (with form data) to add-post page if there is any problem
     if (isset($_SESSION['add-post'])) {
         $_SESSION['add-post-data'] = $_POST;
-        header('location: ' . ROOT_URL . 'admin/');
+        header('location: ' . ROOT_URL . 'admin/add-post.php');
         die();
     } else {
         // set is_featured of all posts to 0 if is_featured for this post is 1
@@ -65,12 +65,12 @@ if (isset($_POST['submit'])) {
         if (!mysqli_errno($connection)) {
             // redirect to dashboard page with success message
             $_SESSION['add-post-success'] = "New post added successfully";
-            header('location: ' . ROOT_URL . 'admin/index.php');
+            header('location: ' . ROOT_URL . 'admin/');
             die();
         }
     }
     
 }
 
-header('location: ' . ROOT_URL . 'admin/add-post.php');
+header('location: ' . ROOT_URL . 'admin/');
 die();

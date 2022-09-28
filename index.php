@@ -57,7 +57,7 @@ $posts = mysqli_query($connection, $query);
 <?php endif ?>
 
     <!--=========== POSTS ==========-->
-    <section class="posts">
+    <section class="posts <?= $featured ? '' : 'section_extra-margin' ?>">
         <div class="container posts_container">
             <?php while($post = mysqli_fetch_assoc($posts)) : ?>
                 <article class="post">
@@ -74,18 +74,18 @@ $posts = mysqli_query($connection, $query);
                         ?>
                         <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $post['category_id'] ?>" class="category_button"><?= $category['title'] ?></a>
                         <h3 class="post_title">
-                            <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $category['id'] ?>"><?= $post['title'] ?></a>
+                            <a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a>
                         </h3>
                         <p class="post_body">
                             <?= substr($post['body'], 0, 150) ?>...
                         </p>
                         <div class="post_author">
                             <?php
-                            // fetch author from users table using author_id
-                            $author_id = $post['author_id'];
-                            $author_query = "SELECT * FROM users WHERE id=$author_id";
-                            $author_result = mysqli_query($connection, $author_query);
-                            $author = mysqli_fetch_assoc($author_result);
+                                // fetch author from users table using author_id
+                                $author_id = $post['author_id'];
+                                $author_query = "SELECT * FROM users WHERE id=$author_id";
+                                $author_result = mysqli_query($connection, $author_query);
+                                $author = mysqli_fetch_assoc($author_result);
                             ?>
                             <div class="post_author-avatar">
                                 <img src="./images/<?= $author['avatar'] ?>">

@@ -1,36 +1,45 @@
 <?php
 include 'partials/header.php';
+
+// fetch post from database if id is set
+if(isset($_GET['id'])) {
+    $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+    $query = "SELECT * FROM posts WHERE id=$id";
+    $result = mysqli_query($connection, $query);
+    $post = mysqli_fetch_assoc($result);
+} else {
+    header('location: ' . ROOT_URL . 'blog.php');
+    die();
+}
 ?>
 
     <!--=========== Single POSTS ==========-->
     <section class="singlepost">
         <div class="container single-post_container">
-            <h2>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus!</h2>
+            <h2><?= $post['title'] ?></h2>
             <div class="post_author">
+                <?php
+                    // fetch author from users table using author_id
+                    $author_id = $post['author_id'];
+                    $author_query = "SELECT * FROM users WHERE id=$author_id";
+                    $author_result = mysqli_query($connection, $author_query);
+                    $author = mysqli_fetch_assoc($author_result);
+                ?>
                 <div class="post_author-avatar">
-                    <img src="./images/avatar11.jpg">
+                    <img src="./images/<?= $author['avatar'] ?>">
                 </div>
                 <div class="post_author-info">
-                    <h5>By: Free Man</h5>
-                    <small>Aug 24, 2022</small>
+                    <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                    <small>
+                        <?= date("M d, Y - H:i", strtotime($post['date_time'])) ?>
+                    </small>
                 </div>
             </div>
             <div class="single-post_thumbnail">
-                <img src="./images/blog15.jpg">
+                <img src="./images/<?= $post['thumbnail'] ?>">
             </div>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id architecto similique blanditiis atque deserunt. Cumque deleniti dolor illo id recusandae aliquid exercitationem, laudantium expedita.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dolores ab itaque ducimus commodi quae quis dolorum aliquid tenetur accusamus?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dolores ab itaque ducimus commodi quae quis dolorum aliquid tenetur accusamus?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit et esse quo minima dolor perferendis vel reiciendis perspiciatis expedita ipsum, officia ex.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dolores ab itaque ducimus commodi quae quis dolorum aliquid tenetur accusamus?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dolores ab itaque ducimus commodi quae quis dolorum aliquid tenetur accusamus?
+                <?= $post['body'] ?>
             </p>
         </div>
     </section>

@@ -28,6 +28,7 @@ if(isset($_GET['id'])) {
     </header>
 
     <!--=========== CATEGORY POSTS ==========-->
+<?php if (mysqli_num_rows($posts) > 0) : ?>
     <section class="posts">
         <div class="container posts_container">
             <?php while($post = mysqli_fetch_assoc($posts)) : ?>
@@ -65,6 +66,11 @@ if(isset($_GET['id'])) {
             <?php endwhile ?>
         </div>
     </section>
+<?php else : ?>
+    <div class="alert_message error lg">
+        <p>No posts found for this category</p>
+    </div>
+<?php endif ?>
 
     <!--=========== CATEGORY BUTTONS ==========-->
     <section class="category_buttons">

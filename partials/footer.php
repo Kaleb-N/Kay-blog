@@ -1,5 +1,20 @@
 
-
+    <!--==== script switcher ===-->
+    <div class="style-switcher">
+        <div class="style-switcher-toggler s-icon">
+            <i class="fas fa-cog fa-spin"></i>
+        </div>
+        <div class="day-night s-icon">
+            <i class="fas "></i>
+        </div>
+        <h4>Theme Colors</h4>
+        <div class="colors">
+            <span class="color1" onclick="setActiveStyle('color1')"></span>
+            <span class="color2" onclick="setActiveStyle('color2')"></span>
+            <span class="color3" onclick="setActiveStyle('color3')"></span>
+            <span class="color4" onclick="setActiveStyle('color4')"></span>
+        </div>
+    </div>
 
 
     <!--=========== FOOTER ==========-->
@@ -59,5 +74,6 @@
     </footer>
 
     <script src="<?= ROOT_URL ?>js/script.js"></script>
+    <script src="<?= ROOT_URL ?>js/style-switcher.js"></script>
 </body>
 </html>

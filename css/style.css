@@ -42,6 +42,9 @@
 html {
     scroll-behavior: smooth;
 }
+/* .dark{
+    background: var(--color-gray-200);
+} */
 body{
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
